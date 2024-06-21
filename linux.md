@@ -272,9 +272,48 @@ Not mandatory
 
 ## Storage Management
 
+```bash
+lsblk
+sudo fdisk --list /dev/sda
+boot loader * Start: 2048
+sudo cfdisk /dev/sdb
+gpt guid partition tables
+```
+
+```bash
+# non persistent
+swapon --show
+lsblk
+sudo mkswap /dev/vdb3
+sudo swapon --verbose /dev/vdb3
+swapon --show
+
+# persistent
+sudo swapoff /dev/vdb3
+sudo dd if=/dev/zero of=/swap bs=1M count=128
+sudo dd if=/dev/zero of=/swap bs=1M count=2048 status=progress
+sudo chmod 600 /swap
+sudo mkswap /swap
+```
+
+```bash
+sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 oflag=append conv=notrunc
+sudo swapoff /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+```
+
+```bash
+sudo mkfs.xfs /dev/sdb1
+sudo mkfs.ext4 -size=512 -L "BackupVolumet" /dev/sdb1
+sudo xfs_admin -l /deV/sdb1
+
+```
 
 
 ## Need to be seen
 
 - AppArmor
 - Starting/boot
+- Process Manager
+- POSIX
